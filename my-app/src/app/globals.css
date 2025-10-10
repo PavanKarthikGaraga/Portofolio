@@ -117,3 +117,7 @@ body {
 .animate-float-delay {
   animation: floatDelay 3s ease-in-out infinite 0.5s;
 }
+
+button:hover{
+  cursor: pointer;
+}

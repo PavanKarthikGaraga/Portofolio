@@ -9,46 +9,46 @@ const ExperienceSection = () => {
     {
       id: 1,
       type: "internship",
-      title: "Full-Stack Developer Intern",
-      company: "TechCorp Solutions",
-      location: "Hyderabad, India",
-      duration: "June 2023 - August 2023",
-      description: "Developed and maintained web applications using React and Node.js. Collaborated with senior developers on client projects and implemented responsive designs.",
-      technologies: ["React", "Node.js", "MongoDB", "Express"],
+      title: "Full Stack Developer Intern",
+      company: "Avanflix Media & Entertainment",
+      location: "Remote",
+      duration: "August 2024 - Present",
+      description: "Building multiple client websites using Next.js and modern web technologies.",
+      technologies: ["Next.js", "TypeScript", "MongoDB", "Node.js"],
       achievements: [
-        "Built a real-time chat application for internal use",
-        "Improved application performance by 40%",
-        "Mentored junior interns on best practices"
+        "Developing responsive and performant websites for multiple clients",
+        "Implementing modern UI/UX designs with Tailwind CSS",
+        "Collaborating with design and content teams for seamless delivery"
       ]
     },
     {
       id: 2,
       type: "internship",
-      title: "Frontend Developer",
-      company: "Digital Innovations Ltd",
+      title: "Full Stack Developer Intern",
+      company: "Vyuha Innovation Foundation",
       location: "Remote",
-      duration: "January 2023 - May 2023",
-      description: "Focused on creating user-friendly interfaces and improving user experience. Worked closely with UX designers to implement pixel-perfect designs.",
-      technologies: ["React", "TypeScript", "Tailwind CSS", "Figma"],
+      duration: "June 2024 - August 2024",
+      description: "Developed a company dashboard for internal operations management.",
+      technologies: ["Next.js", "TypeScript", "MongoDB", "Express.js"],
       achievements: [
-        "Redesigned company dashboard increasing user satisfaction by 30%",
-        "Implemented accessibility features following WCAG guidelines",
-        "Created reusable component library"
+        "Built comprehensive dashboard for streamlining internal operations",
+        "Implemented data visualization components for business metrics",
+        "Integrated authentication and role-based access control"
       ]
     },
     {
       id: 3,
       type: "internship",
-      title: "Software Engineering Intern",
-      company: "StartupXYZ",
-      location: "Bangalore, India",
-      duration: "Summer 2022",
-      description: "Contributed to the development of a SaaS platform. Gained experience in agile development methodologies and version control systems.",
-      technologies: ["JavaScript", "Python", "PostgreSQL", "Git"],
+      title: "Full Stack Developer Intern",
+      company: "Student Activity Center – KLEF",
+      location: "Vijayawada, India",
+      duration: "April 2024 - June 2024",
+      description: "Developed a social internship management application with RBAC, serving 1,000+ daily users and 4,000+ total users.",
+      technologies: ["Next.js", "MySQL", "Node.js", "Nginx"],
       achievements: [
-        "Developed automated testing scripts",
-        "Participated in code reviews and pair programming",
-        "Deployed features to production environment"
+        "Built dashboards and portals for managing student internships efficiently",
+        "Implemented role-based access control for different user types",
+        "Optimized application performance to handle 1,000+ daily active users"
       ]
     }
   ];
@@ -56,39 +56,12 @@ const ExperienceSection = () => {
   const achievements = [
     {
       id: 1,
-      title: "Smart India Hackathon Winner",
-      event: "SIH 2023",
-      description: "Led a team of 4 to develop an AI-powered healthcare solution for rural areas",
-      date: "December 2023",
-      position: "1st Place",
-      technologies: ["React", "Node.js", "Machine Learning", "MongoDB"]
-    },
-    {
-      id: 2,
-      title: "Hackathon Excellence Award",
-      event: "CodeFest 2023",
-      description: "Built a blockchain-based voting system with real-time verification",
-      date: "October 2023",
+      title: "Arbeit – AI Job Portal",
+      event: "Siddhartha College Hackathon",
+      description: "AI-powered resume editor with ATS scanner and mentorship matching",
+      date: "2024",
       position: "2nd Place",
-      technologies: ["React", "Solidity", "Web3.js", "Ethereum"]
-    },
-    {
-      id: 3,
-      title: "Innovation Challenge Winner",
-      event: "TechCrunch Disrupt",
-      description: "Developed a sustainable energy monitoring platform for smart cities",
-      date: "August 2023",
-      position: "Finalist",
-      technologies: ["IoT", "Python", "AWS", "React"]
-    },
-    {
-      id: 4,
-      title: "Open Source Contributor",
-      event: "GitHub",
-      description: "Active contributor to various open-source projects and maintainer of 2 libraries",
-      date: "Ongoing",
-      position: "Top Contributor",
-      technologies: ["JavaScript", "TypeScript", "Node.js"]
+      technologies: ["Next.js", "MongoDB Atlas", "Gemini API", "AWS"]
     }
   ];
 
@@ -113,17 +86,17 @@ Achievements
           <div className="w-24 h-1 bg-[var(--foreground)] mx-auto rounded-full mt-4"></div>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="flex flex-col gap-12">
           {/* Experience Section */}
           <div>
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: -30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="mb-8"
+              className="mb-8 text-center"
             >
-              <h3 className="text-2xl md:text-3xl font-bold text-[var(--foreground)] mb-2 flex items-center gap-3">
+              <h3 className="text-2xl md:text-3xl font-bold text-[var(--foreground)] mb-2 flex items-center gap-3 justify-center">
                 <FaBriefcase className="text-blue-500" />
                 Professional Experience
               </h3>
@@ -132,12 +105,12 @@ Achievements
               </p>
             </motion.div>
 
-            <div className="space-y-6">
+            <div className="space-y-6 max-w-4xl mx-auto">
               {experiences.map((exp, index) => (
                 <motion.div
                   key={exp.id}
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.2 }}
                   viewport={{ once: true }}
                   className="relative bg-[var(--background-secondary)] rounded-xl p-6 border border-[var(--foreground-secondary)]/20 hover:border-[var(--accent)]/30 transition-all duration-300 group"
@@ -199,67 +172,61 @@ Achievements
           </div>
 
           {/* Achievements Section */}
-          <div>
+          <div className="mt-12">
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: -30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="mb-8"
+              className="mb-8 text-center"
             >
-              <h3 className="text-2xl md:text-3xl font-bold text-[var(--foreground)] mb-2 flex items-center gap-3">
+              <h3 className="text-2xl md:text-3xl font-bold text-[var(--foreground)] mb-2 flex items-center gap-3 justify-center">
                 <FaTrophy className="text-yellow-500" />
-                Achievements & Awards
+                Achievement
               </h3>
               <p className="text-[var(--foreground-secondary)]">
-                Recognition and accomplishments in hackathons and competitions
+                Recognition in hackathon competition
               </p>
             </motion.div>
 
-            <div className="space-y-6">
+            <div className="max-w-3xl mx-auto">
               {achievements.map((achievement, index) => (
                 <motion.div
                   key={achievement.id}
-                  initial={{ opacity: 0, x: 30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
                   viewport={{ once: true }}
                   whileHover={{ scale: 1.02 }}
-                  className="bg-[var(--background-secondary)] rounded-xl p-6 border border-[var(--foreground-secondary)]/20 hover:border-yellow-500/30 transition-all duration-300 group"
+                  className="bg-[var(--background-secondary)] rounded-xl p-8 border border-[var(--foreground-secondary)]/20 hover:border-yellow-500/30 transition-all duration-300 group"
                 >
-                  <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-start justify-between mb-5">
                     <div className="flex-1">
-                      <h4 className="text-lg font-semibold text-[var(--foreground)] group-hover:text-yellow-500 transition-colors mb-1">
+                      <h4 className="text-2xl font-semibold text-[var(--foreground)] group-hover:text-yellow-500 transition-colors mb-2">
                         {achievement.title}
                       </h4>
-                      <div className="flex items-center gap-2 text-sm text-[var(--foreground-secondary)] mb-2">
+                      <div className="flex items-center gap-2 text-sm text-[var(--foreground-secondary)] mb-3">
                         <span className="font-medium">{achievement.event}</span>
                         <span>•</span>
                         <span>{achievement.date}</span>
                       </div>
                     </div>
                     <div className="flex-shrink-0">
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        achievement.position === '1st Place'
-                          ? 'bg-yellow-500/20 text-yellow-600'
-                          : achievement.position === '2nd Place'
-                          ? 'bg-gray-500/20 text-gray-600'
-                          : 'bg-blue-500/20 text-blue-600'
-                      }`}>
+                      <span className="px-4 py-2 rounded-full text-sm font-semibold bg-gray-500/20 text-gray-600">
                         {achievement.position}
                       </span>
                     </div>
                   </div>
 
-                  <p className="text-[var(--foreground-secondary)] mb-4 leading-relaxed">
+                  <p className="text-[var(--foreground-secondary)] mb-6 leading-relaxed text-lg">
                     {achievement.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-3">
                     {achievement.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="px-3 py-1 bg-yellow-500/10 text-yellow-600 rounded-full text-sm"
+                        className="px-4 py-2 bg-yellow-500/10 text-yellow-600 rounded-full text-md font-medium"
                       >
                         {tech}
                       </span>

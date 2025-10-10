@@ -68,8 +68,12 @@ const FloatingNavbar = () => {
         transition={{ duration: 0.5 }}
         className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 hidden md:block"
       >
-        <div className="bg-[var(--background-secondary)]/80 backdrop-blur-md border border-[var(--foreground-secondary)]/20 rounded-full px-6 py-3 shadow-lg">
-          <div className="flex items-center space-x-6">
+        <motion.div
+          className="bg-[var(--background-secondary)]/80 backdrop-blur-md border border-[var(--foreground-secondary)]/20 rounded-full px-4 py-3 shadow-lg hover:shadow-xl hover:bg-[var(--background-secondary)]/90 hover:px-6 hover:scale-105 transition-all duration-300"
+          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.2 }}
+        >
+          <div className="flex items-center space-x-4 hover:space-x-6 transition-all duration-300 group">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeSection === item.id;
@@ -80,10 +84,9 @@ const FloatingNavbar = () => {
                   onClick={() => scrollToSection(item.id)}
                   className={`relative flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 ${
                     isActive
-                      ? 'text-[var(--accent)] bg-[var(--accent-secondary)]/20'
-                      : 'text-[var(--foreground-secondary)] hover:text-[var(--accent)] hover:bg-[var(--accent-secondary)]/10'
+                      ? 'text-black bg-white'
+                      : 'text-[var(--foreground-secondary)] hover:text-black hover:bg-white'
                   }`}
-                  whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <Icon className="text-lg" />
@@ -102,14 +105,13 @@ const FloatingNavbar = () => {
             {/* Theme Toggle */}
             <motion.button
               onClick={toggleTheme}
-              className="flex items-center justify-center w-10 h-10 rounded-full text-[var(--foreground-secondary)] hover:text-[var(--accent)] hover:bg-[var(--accent-secondary)]/10 transition-all duration-300"
-              whileHover={{ scale: 1.1 }}
+              className="flex items-center justify-center w-10 h-10 rounded-full text-[var(--foreground-secondary)] hover:text-black hover:bg-white transition-all duration-300"
               whileTap={{ scale: 0.95 }}
             >
               {isDark ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
             </motion.button>
           </div>
-        </div>
+        </motion.div>
       </motion.nav>
 
       {/* Mobile Floating Navbar */}

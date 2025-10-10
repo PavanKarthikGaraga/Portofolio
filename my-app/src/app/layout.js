@@ -9,8 +9,8 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "Garaga Pavan Karthik - Portfolio",
-  description: "Full-Stack Developer Portfolio",
+  title: "Garaga Pavan Karthik",
+  description: "Pavan Karthik's Portfolio",
 };
 
 export default function RootLayout({ children }) {

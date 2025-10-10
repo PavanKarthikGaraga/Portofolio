@@ -61,11 +61,11 @@ Me
               scalable and user-friendly solutions that make a difference.
             </p>
 
-            <p className="text-lg text-[var(--foreground-secondary)] leading-relaxed">
+            {/* <p className="text-lg text-[var(--foreground-secondary)] leading-relaxed">
               My journey in software development began with curiosity and has evolved into a deep commitment
               to crafting high-quality digital experiences. I believe in writing clean, maintainable code
               and staying up-to-date with the latest industry trends and best practices.
-            </p>
+            </p> */}
 
             <p className="text-lg text-[var(--foreground-secondary)] leading-relaxed">
               When I&apos;m not coding, you can find me exploring new technologies, contributing to open-source
@@ -116,11 +116,11 @@ Me
                   className="p-6 bg-[var(--background-secondary)] rounded-xl border border-[var(--foreground-secondary)]/20 hover:border-[var(--accent)]/30 transition-all duration-300 group"
                 >
                   <motion.div
-                    whileHover={{ rotate: 360 }}
+                    whileHover={{ rotate: 20 }}
                     transition={{ duration: 0.6 }}
                     className="w-12 h-12 bg-[var(--background-secondary)] rounded-lg flex items-center justify-center mb-4 group-hover:shadow-lg"
                   >
-                    <Icon className="text-[var(--background)] text-xl" />
+                    <Icon className="text-[var(--foreground)] text-xl" />
                   </motion.div>
                   <h3 className="text-lg font-semibold text-[var(--foreground)] mb-2">
                     {highlight.title}
@@ -140,7 +140,7 @@ Me
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
           viewport={{ once: true }}
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8"
+          className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8"
         >
           <div className="text-center">
             <motion.div
@@ -178,7 +178,7 @@ Me
             <p className="text-[var(--foreground-secondary)] font-medium">Technologies</p>
           </div>
 
-          <div className="text-center">
+          {/* <div className="text-center">
             <motion.div
               whileInView={{ scale: [0, 1] }}
               transition={{ duration: 0.6, type: "spring", delay: 0.3 }}
@@ -188,7 +188,7 @@ Me
               3+
             </motion.div>
             <p className="text-[var(--foreground-secondary)] font-medium">Hackathons Won</p>
-          </div>
+          </div> */}
         </motion.div>
       </div>
     </section>
