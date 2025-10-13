@@ -2,7 +2,6 @@ import FloatingNavbar from '../components/FloatingNavbar';
 import LandingSection from '../components/sections/LandingSection';
 import ExperienceSection from '../components/sections/ExperienceSection';
 import ProjectsSection from '../components/sections/ProjectsSection';
-import ContactSection from '../components/sections/ContactSection';
 
 export default function Home() {
   return (
@@ -21,8 +20,6 @@ export default function Home() {
         {/* Projects Section */}
         <ProjectsSection />
 
-        {/* Contact Section */}
-        <ContactSection />
       </div>
     </div>
   );

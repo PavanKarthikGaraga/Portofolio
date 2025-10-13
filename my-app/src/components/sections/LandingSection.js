@@ -1,13 +1,16 @@
 'use client';
 
-import Image from 'next/image'; 
+import Image from 'next/image';
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTheme } from '../../contexts/ThemeContext';
 import { FaDownload, FaGithub, FaLinkedinIn , FaTwitter, FaEnvelope, FaReact, FaNodeJs, FaDocker } from 'react-icons/fa';
 import { BsTwitterX } from "react-icons/bs";
 import { SiNextdotjs, SiTypescript, SiMongodb, SiMysql, SiTailwindcss, SiExpress, SiJavascript, SiLeetcode } from 'react-icons/si';
 
 const LandingSection = () => {
+  const { isDark, toggleTheme } = useTheme();
+
   const techStack = [
     { name: "React", icon: FaReact, color: "#61DAFB" },
     { name: "Next.js", icon: SiNextdotjs, color: "#FAFAFA" },
@@ -51,30 +54,43 @@ const LandingSection = () => {
   return (
     <section
       id="home"
-      className="px-4 pt-16"
+      className="px-4 pt-24"
     >
       <div className="max-w-3xl mx-auto">
-        {/* Profile Circle */}
+        {/* Name and Profile */}
         <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="mb-8"
-        >
-          <div className="w-16 h-16 rounded-full bg-blue-500 flex items-center justify-center">
-            <span className="text-2xl text-white font-bold">PK</span>
-          </div>
-        </motion.div>
-
-        {/* Name */}
-        <motion.h1
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-xl font-bold text-[var(--foreground)] mb-1"
+          className="flex items-center justify-between mb-1"
         >
-          Pavan Karthik Garaga
-        </motion.h1>
+          <div className="flex items-center gap-4">
+            {/* Profile Circle */}
+            {/* <motion.div
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center">
+                <span className="text-lg text-white font-bold">PK</span>
+              </div>
+            </motion.div> */}
+
+            {/* Name */}
+            <h1 className="text-xl font-bold text-[var(--foreground)]">
+              Pavan Karthik Garaga
+            </h1>
+          </div>
+
+          {/* Lights On Theme Toggle */}
+          <motion.button
+            onClick={toggleTheme}
+            whileTap={{ scale: 0.95 }}
+            className="text-[0.8rem] text-[var(--foreground)] hover:text-[var(--foreground)] transition-colors cursor-pointer"
+          >
+            Lights {isDark ? 'on' : 'off'}
+          </motion.button>
+        </motion.div>
 
         {/* Role */}
         <motion.p
