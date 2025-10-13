@@ -4,30 +4,19 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 import {
-  FaHome,
-  FaUser,
-  FaCode,
-  FaBriefcase,
-  FaProjectDiagram,
-  FaEnvelope,
   FaMoon,
   FaSun,
-  FaBars,
-  FaTimes,
 } from 'react-icons/fa';
 
 const FloatingNavbar = () => {
   const { isDark, toggleTheme } = useTheme();
   const [activeSection, setActiveSection] = useState('home');
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = React.useMemo(() => [
-    { id: 'home', label: 'Home', icon: FaHome },
-    { id: 'about', label: 'About', icon: FaUser },
-    { id: 'tech-stack', label: 'Tech Stack', icon: FaCode },
-    { id: 'experience', label: 'Experience', icon: FaBriefcase },
-    { id: 'projects', label: 'Projects', icon: FaProjectDiagram },
-    { id: 'contact', label: 'Contact', icon: FaEnvelope },
+    { id: 'home', label: 'Home' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'projects', label: 'Projects' },
+    { id: 'contact', label: 'Contact' },
   ], []);
 
   useEffect(() => {
@@ -56,44 +45,54 @@ const FloatingNavbar = () => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-    setIsMenuOpen(false);
   };
 
   return (
     <>
       {/* Desktop Floating Navbar */}
       <motion.nav
-        initial={{ opacity: 0, y: -50 }}
+        initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 hidden md:block"
+        className="fixed top-6 right-6 z-50"
       >
-        <motion.div
-          className="bg-[var(--background-secondary)]/80 backdrop-blur-md border border-[var(--foreground-secondary)]/20 rounded-full px-4 py-3 shadow-lg hover:shadow-xl hover:bg-[var(--background-secondary)]/90 hover:px-6 hover:scale-105 transition-all duration-300"
-          whileHover={{ scale: 1.02 }}
-          transition={{ duration: 0.2 }}
-        >
-          <div className="flex items-center space-x-4 hover:space-x-6 transition-all duration-300 group">
+        <div className="flex items-center gap-2">
+          {/* Theme Toggle */}
+          <motion.button
+            onClick={toggleTheme}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="p-3 bg-[var(--background-secondary)] border border-[var(--foreground-secondary)]/20 rounded-lg hover:border-[var(--foreground-secondary)]/40 transition-colors"
+            aria-label="Toggle theme"
+          >
+            {isDark ? (
+              <FaSun className="text-lg text-[var(--foreground-secondary)]" />
+            ) : (
+              <FaMoon className="text-lg text-[var(--foreground-secondary)]" />
+            )}
+          </motion.button>
+
+          {/* Navigation Menu */}
+          <div className="hidden md:flex items-center gap-1 bg-[var(--background-secondary)] border border-[var(--foreground-secondary)]/20 rounded-lg p-1">
             {navItems.map((item) => {
-              const Icon = item.icon;
               const isActive = activeSection === item.id;
 
               return (
                 <motion.button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`relative flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 ${
+                  className={`relative px-4 py-2 rounded-md text-sm font-medium transition-all ${
                     isActive
-                      ? 'text-black bg-white'
-                      : 'text-[var(--foreground-secondary)] hover:text-black hover:bg-white'
+                      ? 'text-[var(--foreground)]'
+                      : 'text-[var(--foreground-secondary)] hover:text-[var(--foreground)]'
                   }`}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Icon className="text-lg" />
+                  {item.label}
                   {isActive && (
                     <motion.div
-                      layoutId="activeIndicator"
-                      className="absolute inset-0 rounded-full border-2 border-[var(--accent)]"
+                      layoutId="activeBackground"
+                      className="absolute inset-0 bg-[var(--foreground)]/10 rounded-md -z-10"
                       initial={false}
                       transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
@@ -101,94 +100,46 @@ const FloatingNavbar = () => {
                 </motion.button>
               );
             })}
-
-            {/* Theme Toggle */}
-            <motion.button
-              onClick={toggleTheme}
-              className="flex items-center justify-center w-10 h-10 rounded-full text-[var(--foreground-secondary)] hover:text-black hover:bg-white transition-all duration-300"
-              whileTap={{ scale: 0.95 }}
-            >
-              {isDark ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
-            </motion.button>
           </div>
-        </motion.div>
-      </motion.nav>
-
-      {/* Mobile Floating Navbar */}
-      <motion.nav
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="fixed top-6 right-6 z-50 md:hidden"
-      >
-        <div className="bg-[var(--background-secondary)]/80 backdrop-blur-md border border-[var(--foreground-secondary)]/20 rounded-full p-3 shadow-lg">
-          <motion.button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="flex items-center justify-center w-10 h-10 rounded-full text-[var(--foreground-secondary)] hover:text-[var(--accent)] transition-all duration-300"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {isMenuOpen ? <FaTimes className="text-lg" /> : <FaBars className="text-lg" />}
-          </motion.button>
         </div>
       </motion.nav>
 
-      {/* Mobile Menu Overlay */}
-      {isMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
-          onClick={() => setIsMenuOpen(false)}
-        >
-          <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 30 }}
-            className="absolute right-0 top-0 h-full w-80 bg-[var(--background)] border-l border-[var(--foreground-secondary)]/20 shadow-xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-6 space-y-4">
-              <div className="flex justify-between items-center mb-8">
-                <h3 className="text-xl font-semibold text-[var(--foreground)]">Menu</h3>
-                <motion.button
-                  onClick={toggleTheme}
-                  className="flex items-center justify-center w-10 h-10 rounded-full text-[var(--foreground-secondary)] hover:text-[var(--accent)] hover:bg-[var(--accent-secondary)]/10 transition-all duration-300"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {isDark ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
-                </motion.button>
-              </div>
+      {/* Mobile Navigation */}
+      <motion.nav
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 md:hidden"
+      >
+        <div className="flex items-center gap-1 bg-[var(--background-secondary)] border border-[var(--foreground-secondary)]/20 rounded-full p-1 shadow-lg">
+          {navItems.map((item) => {
+            const isActive = activeSection === item.id;
 
-              {navItems.map((item, index) => {
-                const Icon = item.icon;
-                const isActive = activeSection === item.id;
-
-                return (
-                  <motion.button
-                    key={item.id}
-                    onClick={() => scrollToSection(item.id)}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className={`w-full flex items-center space-x-4 px-4 py-3 rounded-lg transition-all duration-300 ${
-                      isActive
-                        ? 'text-[var(--accent)] bg-[var(--accent-secondary)]/20'
-                        : 'text-[var(--foreground-secondary)] hover:text-[var(--accent)] hover:bg-[var(--accent-secondary)]/10'
-                    }`}
-                  >
-                    <Icon className="text-lg" />
-                    <span className="font-medium">{item.label}</span>
-                  </motion.button>
-                );
-              })}
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
+            return (
+              <motion.button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`relative px-4 py-2 rounded-full text-xs font-medium transition-all ${
+                  isActive
+                    ? 'text-[var(--foreground)]'
+                    : 'text-[var(--foreground-secondary)]'
+                }`}
+                whileTap={{ scale: 0.95 }}
+              >
+                {item.label}
+                {isActive && (
+                  <motion.div
+                    layoutId="activeMobileBackground"
+                    className="absolute inset-0 bg-[var(--foreground)]/10 rounded-full -z-10"
+                    initial={false}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+              </motion.button>
+            );
+          })}
+        </div>
+      </motion.nav>
     </>
   );
 };

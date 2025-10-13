@@ -41,12 +41,12 @@ export const ThemeProvider = ({ children }) => {
     }
 
     // Force CSS variable update
-    root.style.setProperty('--background', isDark ? '#000000' : '#ffffff');
-    root.style.setProperty('--foreground', isDark ? '#ffffff' : '#000000');
-    root.style.setProperty('--background-secondary', isDark ? '#0a0a0a' : '#f5f5f5');
-    root.style.setProperty('--foreground-secondary', isDark ? '#a3a3a3' : '#666666');
-    root.style.setProperty('--accent', isDark ? '#ffffff' : '#000000');
-    root.style.setProperty('--accent-secondary', isDark ? '#1a1a1a' : '#e5e5e5');
+    root.style.setProperty('--background', isDark ? '#121212' : '#F2EBEC');
+    root.style.setProperty('--foreground', isDark ? '#FAFAFA' : '#121212');
+    root.style.setProperty('--background-secondary', isDark ? '#1a1a1a' : '#e5dfe0');
+    root.style.setProperty('--foreground-secondary', isDark ? '#a0a0a0' : '#4a4a4a');
+    root.style.setProperty('--accent', isDark ? '#FAFAFA' : '#121212');
+    root.style.setProperty('--accent-secondary', isDark ? '#2a2a2a' : '#d5d0d1');
   }, [isDark]);
 
   const toggleTheme = () => {
