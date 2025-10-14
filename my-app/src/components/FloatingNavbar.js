@@ -2,18 +2,21 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRouter, usePathname } from 'next/navigation';
 import NumberFlow, { NumberFlowGroup } from '@number-flow/react';
 
 
 const FloatingNavbar = () => {
-  const [activeSection, setActiveSection] = useState('home');
+  const router = useRouter();
+  const pathname = usePathname();
+  const [activeSection, setActiveSection] = useState('/');
   const [currentTime, setCurrentTime] = useState('');
   const [prevTime, setPrevTime] = useState('');
 
   const navItems = React.useMemo(() => [
-    { id: 'home', label: 'About' },
-    { id: 'experience', label: 'Experience' },
-    { id: 'projects', label: 'Projects' },
+    { id: '/', label: 'Home' },
+    { id: '/about', label: 'About' },
+    { id: '/works', label: 'Works' },
   ], []);
 
   useEffect(() => {
@@ -37,41 +40,21 @@ const FloatingNavbar = () => {
   }, [currentTime]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = navItems.map(item => item.id);
-      const currentSection = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
-      });
+    setActiveSection(pathname);
+  }, [pathname]);
 
-      if (currentSection) {
-        setActiveSection(currentSection);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [navItems]);
-
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+  const navigateToPage = (pageId) => {
+    router.push(pageId);
   };
 
   return (
     <>
       {/* Desktop Floating Navbar */}
       <motion.nav
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50"
+        className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50"
       >
         {/* Navigation Menu */}
         <motion.div
@@ -89,7 +72,7 @@ const FloatingNavbar = () => {
             return (
               <motion.button
                 key={item.id}
-                onClick={() => scrollToSection(item.id)}
+                onClick={() => navigateToPage(item.id)}
                 className={`relative px-4 py-2 rounded-md text-sm font-medium transition-all ${isActive
                   ? 'text-[var(--foreground)]'
                   : 'text-[var(--foreground-secondary)] hover:text-[var(--foreground)]'
@@ -168,7 +151,7 @@ const FloatingNavbar = () => {
             return (
               <motion.button
                 key={item.id}
-                onClick={() => scrollToSection(item.id)}
+                onClick={() => navigateToPage(item.id)}
                 className={`relative px-4 py-2 rounded-full text-xs font-medium transition-all ${isActive
                   ? 'text-[var(--foreground)]'
                   : 'text-[var(--foreground-secondary)]'

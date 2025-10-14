@@ -9,8 +9,8 @@ export default function Home() {
       {/* Floating Navbar */}
       <FloatingNavbar />
 
-      {/* Main Content Container - 50% width on desktop, 95% on mobile */}
-      <div className="w-full max-w-[95%] md:max-w-[50%] mx-auto">
+      {/* Main Content Container - 40% width on desktop, 95% on mobile */}
+      <div className="w-full max-w-[95%] md:max-w-[40%] px-4 mx-auto">
         {/* Landing Section */}
         <LandingSection />
 

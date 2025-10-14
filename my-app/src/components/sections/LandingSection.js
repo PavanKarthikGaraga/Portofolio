@@ -4,59 +4,21 @@ import Image from 'next/image';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../../contexts/ThemeContext';
-import { FaDownload, FaGithub, FaLinkedinIn , FaTwitter, FaEnvelope, FaReact, FaNodeJs, FaDocker } from 'react-icons/fa';
-import { BsTwitterX } from "react-icons/bs";
-import { SiNextdotjs, SiTypescript, SiMongodb, SiMysql, SiTailwindcss, SiExpress, SiJavascript, SiLeetcode } from 'react-icons/si';
+import { FaDownload } from 'react-icons/fa';
+import { SiNextdotjs, SiJavascript } from 'react-icons/si';
+import { FaNodeJs } from 'react-icons/fa';
+import { techStack } from '../../data/techStack';
+import { socialLinks } from '../../data/socialLinks';
 
 const LandingSection = () => {
   const { isDark, toggleTheme } = useTheme();
 
-  const techStack = [
-    { name: "React", icon: FaReact, color: "#61DAFB" },
-    { name: "Next.js", icon: SiNextdotjs, color: "#FAFAFA" },
-    { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
-    { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
-    { name: "Node.js", icon: FaNodeJs, color: "#339933" },
-    { name: "Express.js", icon: SiExpress, color: "#FAFAFA" },
-    { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
-    { name: "MySQL", icon: SiMysql, color: "#4479A1" },
-    { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" },
-    { name: "Docker", icon: FaDocker, color: "#2496ED" },
-  ];
-
-  const socialLinks = [
-    {
-      name: "Email",
-      href: "mailto:pavankarthik107@gmail.com",
-      icon: FaEnvelope,
-      target: "_blank"
-    },
-    {
-      name: "LinkedIn",
-      href: "https://linkedin.com/in/pavankarthikgaraga",
-      icon: FaLinkedinIn ,
-      target: "_blank"
-    },
-    {
-      name: "GitHub",
-      href: "https://github.com/pavankarthikgaraga",
-      icon: FaGithub,
-      target: "_blank"
-    },
-    {
-      name: "Twitter",
-      href: "https://twitter.com/pavankarthikgaraga",
-      icon: BsTwitterX,
-      target: "_blank"
-    }
-  ];
-
   return (
     <section
       id="home"
-      className="px-4 pt-24"
+      className="pt-24"
     >
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-2xl mx-auto">
         {/* Name and Profile */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
@@ -77,7 +39,7 @@ const LandingSection = () => {
             </motion.div> */}
 
             {/* Name */}
-            <h1 className="text-xl font-bold text-[var(--foreground)]">
+            <h1 className="text-lg font-bold text-[var(--foreground)]">
               Pavan Karthik Garaga
             </h1>
           </div>
@@ -86,7 +48,7 @@ const LandingSection = () => {
           <motion.button
             onClick={toggleTheme}
             whileTap={{ scale: 0.95 }}
-            className="text-[0.8rem] text-[var(--foreground)] hover:text-[var(--foreground)] transition-colors cursor-pointer"
+            className="text-[0.9rem] text-[var(--foreground)] hover:text-[var(--foreground)] transition-colors cursor-pointer pr-0"
           >
             Lights {isDark ? 'on' : 'off'}
           </motion.button>
@@ -97,9 +59,9 @@ const LandingSection = () => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="text-base text-[var(--foreground)] mb-1"
+          className="text-sm text-[var(--foreground)] mb-1"
         >
-          Full-Stack Developer
+         3rd Year Undergrad KLEF&apos;27 | Full-Stack Developer
         </motion.p>
 
         {/* Location */}
@@ -118,22 +80,17 @@ const LandingSection = () => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          className="text-base text-[var(--foreground-secondary)] max-w-2xl mb-6 leading-relaxed"
+          className="text-sm text-[var(--foreground-secondary)] max-w-2xl mb-6 leading-relaxed"
         >
           Specializing in frontend development with{' '}
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-[var(--foreground)]/10 rounded text-[var(--foreground)] font-medium">
-            <SiNextdotjs className="text-sm" />
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[var(--foreground)] font-bold tracking-wide">
+            <SiNextdotjs className="text-sm animate-bounce" />
             Next.js(React.js)
           </span>
           . I am passionate about building dynamic, responsive web applications. Alongside my frontend expertise, I also have experience in backend development with{' '}
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-[var(--foreground)]/10 rounded text-[var(--foreground)] font-medium">
-            <FaNodeJs className="text-sm" />
-            Spring Boot
-          </span>
-          {' '}and{' '}
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-[var(--foreground)]/10 rounded text-[var(--foreground)] font-medium">
-            <SiJavascript className="text-sm" />
-            Java
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[var(--foreground)] font-bold tracking-widest">
+            <FaNodeJs className="text-sm animate-bounce" />
+            Node.js
           </span>
           .
         </motion.p>
@@ -149,9 +106,9 @@ const LandingSection = () => {
           <motion.a
             href="/resume.pdf"
             download
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ y: -2 }}
             whileTap={{ scale: 0.98 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--foreground)] text-[var(--background)] rounded-full text-sm font-medium hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--foreground)] text-[var(--background)] rounded-full text-sm font-bold hover:opacity-90 transition-opacity"
           >
             Resume
             <FaDownload className="text-xs" />
@@ -218,7 +175,7 @@ const LandingSection = () => {
           transition={{ duration: 0.5, delay: 0.8 }}
           className="mb-12"
         >
-          <h3 className="text-base font-semibold text-[var(--foreground)] mb-4">
+          <h3 className="text-sm font-semibold text-[var(--foreground)] mb-4">
             Tech Stack
           </h3>
           <div className="flex flex-wrap items-center gap-6">

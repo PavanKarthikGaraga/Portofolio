@@ -1,19 +1,11 @@
-import { Lexend } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "../contexts/ThemeContext";
 
-const lexend = Lexend({
-  variable: "--font-lexend",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-});
-
-
 const customFont = localFont({
   src: [
     {
-      path: "../../public/fonts/Maison_Neue_Book.ttf",
+      path: "../../public/fonts/Satoshi-Regular.ttf",
       weight: "400",
       style: "normal",
     },
@@ -36,7 +28,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body
-        className={`${customFont.variable} antialiased font-lexend`}
+        className={`${customFont.variable} antialiased font-custom`}
       >
         <ThemeProvider>{children}</ThemeProvider>
       </body>
