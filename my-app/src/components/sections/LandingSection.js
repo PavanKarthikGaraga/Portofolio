@@ -1,10 +1,11 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../../contexts/ThemeContext';
-import { FaDownload } from 'react-icons/fa';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 import { SiNextdotjs, SiJavascript } from 'react-icons/si';
 import { FaNodeJs } from 'react-icons/fa';
 import { techStack } from '../../data/techStack';
@@ -16,7 +17,7 @@ const LandingSection = () => {
   return (
     <section
       id="home"
-      className="pt-24"
+      className="pt-12"
     >
       <div className="max-w-2xl mx-auto">
         {/* Name and Profile */}
@@ -34,24 +35,15 @@ const LandingSection = () => {
               transition={{ duration: 0.5 }}
             >
               <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center">
-                <span className="text-lg text-white font-bold">PK</span>
+                <span className="text-lg text-white font-semibold">PK</span>
               </div>
             </motion.div> */}
 
             {/* Name */}
-            <h1 className="text-lg font-bold text-[var(--foreground)]">
+            <h1 className="text-2xl font-semibold text-[var(--foreground)]">
               Pavan Karthik Garaga
             </h1>
           </div>
-
-          {/* Lights On Theme Toggle */}
-          <motion.button
-            onClick={toggleTheme}
-            whileTap={{ scale: 0.95 }}
-            className="text-[0.9rem] text-[var(--foreground)] hover:text-[var(--foreground)] transition-colors cursor-pointer pr-0"
-          >
-            Lights {isDark ? 'on' : 'off'}
-          </motion.button>
         </motion.div>
 
         {/* Role */}
@@ -61,7 +53,7 @@ const LandingSection = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-sm text-[var(--foreground)] mb-1"
         >
-         3rd Year Undergrad KLEF&apos;27 | Full-Stack Developer
+          3rd Year Undergrad KLEF&apos;27 | Full-Stack Developer
         </motion.p>
 
         {/* Location */}
@@ -71,7 +63,7 @@ const LandingSection = () => {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="text-sm text-[var(--foreground-secondary)] mb-6 flex items-center gap-1"
         >
-          Vijayawada, India 
+          Vijayawada, India
           <Image src="/indiaflag.svg" alt="India" width={22} height={18} />
         </motion.p>
 
@@ -83,12 +75,12 @@ const LandingSection = () => {
           className="text-sm text-[var(--foreground-secondary)] max-w-2xl mb-6 leading-relaxed"
         >
           Specializing in frontend development with{' '}
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[var(--foreground)] font-bold tracking-wide">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[var(--foreground)] font-semibold tracking-wide">
             <SiNextdotjs className="text-sm animate-bounce" />
             Next.js(React.js)
           </span>
           . I am passionate about building dynamic, responsive web applications. Alongside my frontend expertise, I also have experience in backend development with{' '}
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[var(--foreground)] font-bold tracking-widest">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[var(--foreground)] font-semibold tracking-widest">
             <FaNodeJs className="text-sm animate-bounce" />
             Node.js
           </span>
@@ -103,16 +95,16 @@ const LandingSection = () => {
           className="flex items-center gap-3 flex-wrap mb-8"
         >
           {/* Resume Button */}
-          <motion.a
-            href="/resume.pdf"
-            download
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--foreground)] text-[var(--background)] rounded-full text-sm font-bold hover:opacity-90 transition-opacity"
-          >
-            Resume
-            <FaDownload className="text-xs" />
-          </motion.a>
+          <Link href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+            <motion.div
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--foreground)] text-[var(--background)] rounded-full text-sm hover:opacity-90 transition-opacity cursor-pointer"
+            >
+              Resume
+              <FaExternalLinkAlt className="text-xs" />
+            </motion.div>
+          </Link>
 
           {/* Social Links with background */}
           {socialLinks.map((link) => (
@@ -175,10 +167,10 @@ const LandingSection = () => {
           transition={{ duration: 0.5, delay: 0.8 }}
           className="mb-12"
         >
-          <h3 className="text-sm font-semibold text-[var(--foreground)] mb-4">
+          <h3 className="text-xl font-semibold text-[var(--foreground)] mb-4">
             Tech Stack
           </h3>
-          <div className="flex flex-wrap items-center gap-6">
+          <div className="flex px-6 flex-wrap items-center gap-6">
             {techStack.map((tech, index) => {
               const Icon = tech.icon;
               return (
@@ -188,19 +180,23 @@ const LandingSection = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.3, delay: 0.9 + index * 0.05 }}
                   whileHover={{ scale: 1.15, y: -3 }}
-                  className="group relative"
-                  title={tech.name}
+                  className="group relative flex flex-col items-center"
                 >
-                  <Icon 
-                    className="text-4xl text-[var(--foreground-secondary)] hover:text-[var(--foreground)] transition-colors cursor-pointer"
+                  <Icon
+                    className="text-4xl text-[var(--foreground)] hover:text-[var(--foreground-secondary)] transition-colors cursor-pointer"
                   />
+
+                  {/* Tooltip */}
+                  <span className="absolute -bottom-8 px-2 py-1 bg-[var(--background-secondary)] border border-[var(--foreground-secondary)]/20 text-[var(--foreground)] text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10 pointer-events-none">
+                    {tech.name}
+                  </span>
                 </motion.div>
               );
             })}
           </div>
         </motion.div>
-      </div>
-    </section>
+      </div >
+    </section >
   );
 };
 

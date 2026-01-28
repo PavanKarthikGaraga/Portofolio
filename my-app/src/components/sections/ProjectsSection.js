@@ -8,7 +8,7 @@ import { projects } from '../../data/projects';
 const ProjectsSection = () => {
 
   return (
-    <section id="projects" className="py-16">
+    <section id="projects" className="py-12">
       <div className="max-w-2xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -16,8 +16,8 @@ const ProjectsSection = () => {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-xl font-bold text-[var(--foreground)] mb-8">Projects</h2>
-          
+          <h2 className="text-xl font-semibold text-[var(--foreground)] mb-8">Projects</h2>
+
           <div className="space-y-6">
             {projects.map((project, index) => (
               <motion.div
@@ -28,7 +28,7 @@ const ProjectsSection = () => {
                 viewport={{ once: true }}
                 className="pb-6"
               >
-                <div className="flex items-start justify-between mb-3">
+                <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <h3 className="text-base font-semibold text-[var(--foreground)] mb-1">
                       {project.title}

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { experiences, achievement } from '../../data/experiences';
+import { experiences, hackathons } from '../../data/experiences';
 
 const ExperienceSection = () => {
 
@@ -17,8 +17,8 @@ const ExperienceSection = () => {
           viewport={{ once: true }}
           className="mb-16"
         >
-          <h2 className="text-xl font-bold text-[var(--foreground)] mb-8">Experience</h2>
-          
+          <h2 className="text-xl font-semibold text-[var(--foreground)] mb-8">Experience</h2>
+
           <div className="space-y-8">
             {experiences.map((exp, index) => (
               <motion.div
@@ -42,7 +42,7 @@ const ExperienceSection = () => {
                     {exp.title}
                   </p>
                 </div>
-                
+
                 <ul className="space-y-2">
                   {exp.achievements.map((achievement, i) => (
                     <li key={i} className="text-sm text-[var(--foreground-secondary)] flex items-start gap-2">
@@ -56,32 +56,36 @@ const ExperienceSection = () => {
           </div>
         </motion.div>
 
-        {/* Achievement Section */}
+        {/* Hackathon Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-xl font-bold text-[var(--foreground)] mb-6">Achievement</h2>
-          
-          <div className="bg-[var(--background-secondary)] rounded-lg p-6 border border-[var(--foreground-secondary)]/20">
-            <div className="flex items-start justify-between mb-3">
-              <div>
-                <h3 className="text-base font-semibold text-[var(--foreground)] mb-1">
-                  {achievement.title}
-                </h3>
+          <h2 className="text-xl font-semibold text-[var(--foreground)] mb-6">Hackathons</h2>
+
+          <div className="space-y-4">
+            {hackathons.map((hackathon) => (
+              <div key={hackathon.id} className="bg-[var(--background-secondary)] rounded-lg p-6 border border-[var(--foreground-secondary)]/20">
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <h3 className="text-base font-semibold text-[var(--foreground)] mb-1">
+                      {hackathon.title}
+                    </h3>
+                    <p className="text-sm text-[var(--foreground-secondary)]">
+                      {hackathon.event} {hackathon.location && `| ${hackathon.location}`}
+                    </p>
+                  </div>
+                  <span className="px-3 py-1 bg-[var(--foreground)]/10 text-[var(--foreground)] rounded text-sm font-medium whitespace-nowrap ml-4">
+                    {hackathon.position}
+                  </span>
+                </div>
                 <p className="text-sm text-[var(--foreground-secondary)]">
-                  {achievement.event}
+                  {hackathon.description}
                 </p>
               </div>
-              <span className="px-3 py-1 bg-[var(--foreground)]/10 text-[var(--foreground)] rounded text-sm font-medium">
-                {achievement.position}
-              </span>
-            </div>
-            <p className="text-sm text-[var(--foreground-secondary)]">
-              {achievement.description}
-            </p>
+            ))}
           </div>
         </motion.div>
       </div>

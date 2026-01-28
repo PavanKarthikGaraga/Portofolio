@@ -1,11 +1,13 @@
 import localFont from "next/font/local";
+import { Lexend } from "next/font/google"; // Import Poppins
 import "./globals.css";
+import Oneko from "./oneko";
 import { ThemeProvider } from "../contexts/ThemeContext";
 
 const customFont = localFont({
   src: [
     {
-      path: "../../public/fonts/Satoshi-Regular.ttf",
+      path: "../../public/fonts/HankenGrotesk-Variable.ttf",
       weight: "400",
       style: "normal",
     },
@@ -13,10 +15,19 @@ const customFont = localFont({
   variable: "--font-custom",
 });
 
+const lexend = Lexend({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-lexend",
+});
+
 export const metadata = {
   title: "Garaga Pavan Karthik",
   description: "Pavan Karthik's Portfolio",
 };
+
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function RootLayout({ children }) {
   return (
@@ -26,11 +37,19 @@ export default function RootLayout({ children }) {
           name="facebook-domain-verification"
           content="r4vcjdz2s3e3ofv234sxffggp4xqt2"
         />
+        <link rel="icon" href="/me_filled.png" />
       </head>
       <body
-        className={`${customFont.variable} antialiased font-custom`}
+        className={`${customFont.variable} ${lexend.variable} antialiased font-custom`}
       >
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <Navbar />
+          <main>
+            {children}
+          </main>
+          <Footer />
+          <Oneko />
+        </ThemeProvider>
       </body>
     </html>
   );

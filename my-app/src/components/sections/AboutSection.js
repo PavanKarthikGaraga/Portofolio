@@ -50,7 +50,7 @@ const AboutSection = () => {
   ];
 
   return (
-    <section className="py-24">
+    <section className="py-12">
       <div className="max-w-2xl mx-auto">
         {/* About Header */}
         <motion.div
@@ -59,7 +59,7 @@ const AboutSection = () => {
           transition={{ duration: 0.5 }}
           className="mb-12"
         >
-          <h1 className="text-2xl font-bold text-[var(--foreground)] mb-6">About Me</h1>
+          <h1 className="text-2xl font-semibold text-[var(--foreground)] mb-6">About Me</h1>
 
           <div className="space-y-4 text-sm text-[var(--foreground-secondary)] leading-relaxed">
             <p>
@@ -88,7 +88,7 @@ const AboutSection = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="mb-12"
         >
-          <h2 className="text-xl font-bold text-[var(--foreground)] mb-6">Contact Information</h2>
+          <h2 className="text-xl font-semibold text-[var(--foreground)] mb-6">Contact Information</h2>
 
           <div className="space-y-4">
             {contactInfo.map((contact, index) => {
@@ -128,7 +128,7 @@ const AboutSection = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mb-12"
         >
-          <h2 className="text-xl font-bold text-[var(--foreground)] mb-6">Connect With Me</h2>
+          <h2 className="text-xl font-semibold text-[var(--foreground)] mb-6">Connect With Me</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {socialLinks.map((social, index) => {
@@ -163,7 +163,7 @@ const AboutSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <h2 className="text-xl font-bold text-[var(--foreground)] mb-6">Interests & Goals</h2>
+          <h2 className="text-xl font-semibold text-[var(--foreground)] mb-6">Interests & Goals</h2>
 
           <div className="space-y-3 text-sm text-[var(--foreground-secondary)] leading-relaxed">
             <p>

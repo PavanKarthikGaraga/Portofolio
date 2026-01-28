@@ -7,7 +7,7 @@ import { projects } from '../../data/projects';
 
 const WorksSection = () => {
   return (
-    <section className="py-24">
+    <section className="py-12">
       <div className="max-w-2xl mx-auto">
         {/* Works Header */}
         <motion.div
@@ -16,7 +16,7 @@ const WorksSection = () => {
           transition={{ duration: 0.5 }}
           className="mb-12"
         >
-          <h1 className="text-2xl font-bold text-[var(--foreground)] mb-6">My Works</h1>
+          <h1 className="text-2xl font-semibold text-[var(--foreground)] mb-6">Projects</h1>
           <p className="text-sm text-[var(--foreground-secondary)] leading-relaxed">
             A collection of projects I&apos;ve worked on, showcasing my skills in full-stack development,
             UI/UX design, and problem-solving.
