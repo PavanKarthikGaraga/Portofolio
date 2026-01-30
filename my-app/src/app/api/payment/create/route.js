@@ -6,7 +6,7 @@ import Payment from "@/models/Payment";
 
 Cashfree.XClientId = process.env.CLIENT_ID;
 Cashfree.XClientSecret = process.env.CLIENT_SECRET;
-Cashfree.XEnvironment = Cashfree.Environment.SANDBOX; // Change to PRODUCTION when live
+Cashfree.XEnvironment = Cashfree.Environment || Cashfree.CFEnvironment || 1; // Fallback to 1 (SANDBOX) if undefined
 
 export async function POST(req) {
     try {
