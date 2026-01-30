@@ -3,6 +3,7 @@ import { Lexend } from "next/font/google"; // Import Poppins
 import "./globals.css";
 import Oneko from "./oneko";
 import { ThemeProvider } from "../contexts/ThemeContext";
+import { Analytics } from "@vercel/analytics/next";
 
 const customFont = localFont({
   src: [
