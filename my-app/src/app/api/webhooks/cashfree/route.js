@@ -1,20 +1,10 @@
 
 import { NextResponse } from "next/server";
-import { Cashfree } from "cashfree-pg";
 import dbConnect from "@/lib/db";
-import Payment from "@/models/Payment";
+import getPaymentModel from "@/models/Payment";
 
-Cashfree.XClientId = process.env.CLIENT_ID;
-Cashfree.XClientSecret = process.env.CLIENT_SECRET;
-Cashfree.XEnvironment = Cashfree.Environment || Cashfree.CFEnvironment || 1; // Fallback to 1 (SANDBOX)
-
-export async function POST(req) {
+async function handleWebhook(req) {
     try {
-        const formData = await req.formData();
-        // Cashfree sends webhook data as form-data
-        // Depending on webhook config, it might be JSON too. 
-        // Usually standard webhooks are POST with body.
-
         let data;
         try {
             data = await req.json();
@@ -25,7 +15,6 @@ export async function POST(req) {
                 console.log("Webhook: Received FormData", entries);
                 return NextResponse.json({ status: "Ignored Form Data" });
             } catch (err) {
-                // Even if payload is invalid, return 200 to keep webhook active
                 console.error("Webhook Payload Error:", err);
                 return NextResponse.json({ status: "Invalid Payload" });
             }
@@ -41,6 +30,7 @@ export async function POST(req) {
 
             try {
                 await dbConnect();
+                const Payment = await getPaymentModel();
 
                 const update = { status: paymentStatus };
                 if (data.data.payment) {
@@ -55,14 +45,12 @@ export async function POST(req) {
                 );
             } catch (dbError) {
                 console.error("DB Update Error:", dbError);
-                // Return 200 even on DB error to acknowledge receipt
                 return NextResponse.json({ status: "DB Error logged" });
             }
 
             return NextResponse.json({ status: "OK" });
         }
 
-        // Return 200 for test pings or ignored events
         return NextResponse.json({ status: "Ignored" });
 
     } catch (error) {

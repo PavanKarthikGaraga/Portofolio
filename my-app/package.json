@@ -9,19 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "-": "^0.0.1",
     "@cashfreepayments/cashfree-js": "^1.0.6",
     "@number-flow/react": "^0.5.10",
     "@vercel/analytics": "^1.6.1",
     "@vercel/speed-insights": "^1.3.1",
+    "baseline-browser-mapping": "^2.9.19",
     "cashfree-pg": "^5.1.0",
     "framer-motion": "^12.23.12",
     "mongoose": "^9.1.5",
-    "next": "16.0.7",
+    "next": "^16.1.6",
     "onekojs": "^1.1.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-icons": "^5.5.0",
-    "vercel": "^50.9.6"
+    "vercel": "^41.0.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

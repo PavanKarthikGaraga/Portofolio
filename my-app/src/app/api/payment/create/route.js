@@ -2,11 +2,11 @@
 import { NextResponse } from "next/server";
 import { Cashfree } from "cashfree-pg";
 import dbConnect from "@/lib/db";
-import Payment from "@/models/Payment";
+import getPaymentModel from "@/models/Payment";
 
 Cashfree.XClientId = process.env.CLIENT_ID;
 Cashfree.XClientSecret = process.env.CLIENT_SECRET;
-Cashfree.XEnvironment = Cashfree.Environment || Cashfree.CFEnvironment || 1; // Fallback to 1 (SANDBOX) if undefined
+Cashfree.XEnvironment = Cashfree.Environment || Cashfree.CFEnvironment || 1;
 
 export async function POST(req) {
     try {
@@ -14,6 +14,7 @@ export async function POST(req) {
         const { amount, customerName, customerEmail, customerPhone } = body;
 
         await dbConnect();
+        const Payment = await getPaymentModel();
 
         // Generate a unique order ID
         const orderId = "ORDER_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
