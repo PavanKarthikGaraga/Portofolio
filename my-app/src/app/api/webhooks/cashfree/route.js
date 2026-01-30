@@ -15,35 +15,19 @@ export async function POST(req) {
         // Depending on webhook config, it might be JSON too. 
         // Usually standard webhooks are POST with body.
 
-        // However, verify signature is recommended. 
-        // For now simple implementation based on order_id fetching.
-
-        // NOTE: In a real world, verify the signature 'x-webhook-signature'
-
-        // Let's rely on fetching the order status from Cashfree using the order_id 
-        // provided in the webhook payload or just parse the payload directly.
-
-        // Verify signature logic should be here.
-        // For now, we trust the payload but log verification status.
-        // In production, use Cashfree.PGVerifyWebhookSignature(signature, rawBody, timestamp)
-
         let data;
-
         try {
-            // Try parsing as JSON first (standard for modern webhooks)
             data = await req.json();
         } catch (e) {
-            console.log("Webhook: Not JSON, trying formData");
             try {
                 const formData = await req.formData();
-                const entries = Object.fromEntries(formData.entries());
-                // Depending on how cashfree sends form data, it might be nested or flat.
-                // Usually older webhooks send flat data.
-                // However, let's assume JSON for now as it's the default for new accounts.
+                const entries = Object.fromEntries(formData);
                 console.log("Webhook: Received FormData", entries);
                 return NextResponse.json({ status: "Ignored Form Data" });
             } catch (err) {
-                return NextResponse.json({ error: "Invalid Payload" }, { status: 400 });
+                // Even if payload is invalid, return 200 to keep webhook active
+                console.error("Webhook Payload Error:", err);
+                return NextResponse.json({ status: "Invalid Payload" });
             }
         }
 
@@ -55,37 +39,42 @@ export async function POST(req) {
 
             console.log(`Processing Order: ${orderId}, Status: ${paymentStatus}`);
 
-            await dbConnect();
+            try {
+                await dbConnect();
 
-            // Update payment status
-            const update = {
-                status: paymentStatus,
-            };
+                const update = { status: paymentStatus };
+                if (data.data.payment) {
+                    update.transactionId = data.data.payment.cf_payment_id;
+                    update.paymentMethod = data.data.payment.payment_group;
+                }
 
-            if (data.data.payment) {
-                update.transactionId = data.data.payment.cf_payment_id;
-                update.paymentMethod = data.data.payment.payment_group;
-            }
-
-            const updatedPayment = await Payment.findOneAndUpdate(
-                { orderId: orderId },
-                update,
-                { new: true }
-            );
-
-            if (updatedPayment) {
-                console.log("Payment updated in DB:", updatedPayment._id);
-            } else {
-                console.error("Payment not found in DB for order:", orderId);
+                await Payment.findOneAndUpdate(
+                    { orderId: orderId },
+                    update,
+                    { new: true }
+                );
+            } catch (dbError) {
+                console.error("DB Update Error:", dbError);
+                // Return 200 even on DB error to acknowledge receipt
+                return NextResponse.json({ status: "DB Error logged" });
             }
 
             return NextResponse.json({ status: "OK" });
         }
 
-        return NextResponse.json({ status: "Ignored - Missing Order ID" });
+        // Return 200 for test pings or ignored events
+        return NextResponse.json({ status: "Ignored" });
 
     } catch (error) {
-        console.error("Webhook Error:", error);
-        return NextResponse.json({ error: "Webhook Error" }, { status: 500 });
+        console.error("Webhook General Error:", error);
+        return NextResponse.json({ status: "Error logged" });
     }
+}
+
+export async function POST(req) {
+    return handleWebhook(req);
+}
+
+export async function GET(req) {
+    return NextResponse.json({ status: "Webhook Endpoint Active" });
 }
