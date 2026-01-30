@@ -48,6 +48,8 @@ export default function RootLayout({ children }) {
           <Navbar />
           <main>
             {children}
+            <Analytics />
+            <SpeedInsights />
           </main>
           <Footer />
           <Oneko />
