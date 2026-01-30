@@ -4,6 +4,7 @@ import "./globals.css";
 import Oneko from "./oneko";
 import { ThemeProvider } from "../contexts/ThemeContext";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const customFont = localFont({
   src: [
