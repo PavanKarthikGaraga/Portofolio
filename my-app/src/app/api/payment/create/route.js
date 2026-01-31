@@ -16,7 +16,13 @@ export async function POST(req) {
         }
 
         // Configure Cashfree - SDK v5+ requires instantiation
-        const isProduction = process.env.NODE_ENV === 'production';
+        // Use CASHFREE_ENV to explicitly control environment (set to 'production' in production)
+        const cashfreeEnv = process.env.CASHFREE_ENV || 'sandbox';
+        const isProduction = cashfreeEnv === 'production';
+
+        console.log(`Cashfree Environment: ${cashfreeEnv}, isProduction: ${isProduction}`);
+        console.log(`Client ID present: ${!!process.env.CLIENT_ID}, Secret present: ${!!process.env.CLIENT_SECRET}`);
+
         const cashfree = new Cashfree(
             isProduction ? Cashfree.PRODUCTION : Cashfree.SANDBOX,
             process.env.CLIENT_ID,

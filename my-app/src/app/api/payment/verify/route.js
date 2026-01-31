@@ -15,8 +15,9 @@ export async function GET(req) {
             );
         }
 
-        // Configure Cashfree
-        const isProduction = process.env.NODE_ENV === 'production';
+        // Configure Cashfree - use CASHFREE_ENV for environment detection
+        const cashfreeEnv = process.env.CASHFREE_ENV || 'sandbox';
+        const isProduction = cashfreeEnv === 'production';
         const cashfree = new Cashfree(
             isProduction ? Cashfree.PRODUCTION : Cashfree.SANDBOX,
             process.env.CLIENT_ID,
