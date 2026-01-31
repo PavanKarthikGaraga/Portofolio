@@ -62,7 +62,7 @@ function PaymentPageContent() {
         setLoading(true);
         try {
             const cashfree = await load({
-                mode: process.env.NODE_ENV === 'production' ? "production" : "sandbox",
+                mode: process.env.NEXT_PUBLIC_CASHFREE_MODE || "sandbox",
             });
 
             const res = await fetch('/api/payment/create', {
