@@ -93,10 +93,21 @@ export async function POST(req) {
         });
     } catch (error) {
         console.error("Error creating order:", error);
-        console.error("Error details:", error.response?.data || error.message);
+        console.error("Error response data:", JSON.stringify(error.response?.data, null, 2));
+        console.error("Error status:", error.response?.status);
+
+        const errorMessage = error.response?.data?.message || error.message || "Something went wrong";
+        const errorType = error.response?.data?.type || "unknown_error";
+
         return NextResponse.json(
-            { error: error.response?.data?.message || error.message || "Something went wrong" },
-            { status: 500 }
+            {
+                error: errorMessage,
+                type: errorType,
+                hint: errorType === "authentication_error"
+                    ? "Check your Cashfree credentials and ensure production mode is enabled in your Cashfree dashboard"
+                    : undefined
+            },
+            { status: error.response?.status || 500 }
         );
     }
 }
