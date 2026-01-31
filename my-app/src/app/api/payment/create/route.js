@@ -1,6 +1,8 @@
 
 import { NextResponse } from "next/server";
 import { Cashfree } from "cashfree-pg";
+import dbConnect from "@/lib/db";
+import getPaymentModel from "@/models/Payment";
 
 export async function POST(req) {
     try {
@@ -38,7 +40,7 @@ export async function POST(req) {
                 customer_id: customerId,
                 customer_name: customerName,
                 customer_email: customerEmail,
-                customer_phone: customerPhone,
+                customer_phone: customerPhone || "9999999999",
             },
             order_meta: {
                 return_url: `${process.env.NEXT_PUBLIC_URL || 'https://pavankarthik.in'}/payment?order_id={order_id}`,
@@ -54,6 +56,30 @@ export async function POST(req) {
         console.log("Cashfree response:", JSON.stringify(response.data, null, 2));
 
         const paymentSessionId = response.data.payment_session_id;
+
+        // Save payment to database with PENDING status
+        try {
+            await dbConnect();
+            const Payment = await getPaymentModel();
+
+            const payment = new Payment({
+                orderId: orderId,
+                paymentSessionId: paymentSessionId,
+                amount: amount,
+                currency: "INR",
+                customerId: customerId,
+                customerName: customerName,
+                customerEmail: customerEmail,
+                customerPhone: customerPhone || "9999999999",
+                status: "PENDING",
+            });
+
+            await payment.save();
+            console.log("Payment saved to database:", orderId);
+        } catch (dbError) {
+            console.error("Error saving payment to database:", dbError);
+            // Don't fail the request if DB save fails - payment can still proceed
+        }
 
         return NextResponse.json({
             payment_session_id: paymentSessionId,

@@ -1,5 +1,7 @@
 
 import { NextResponse } from "next/server";
+import dbConnect from "@/lib/db";
+import getPaymentModel from "@/models/Payment";
 
 async function handleWebhook(req) {
     try {
@@ -22,10 +24,46 @@ async function handleWebhook(req) {
 
         if (data && data.data && data.data.order && data.data.order.order_id) {
             const orderId = data.data.order.order_id;
-            const paymentStatus = data.data.payment ? data.data.payment.payment_status : "UNKNOWN";
+            const paymentData = data.data.payment;
+            const paymentStatus = paymentData ? paymentData.payment_status : "UNKNOWN";
 
             console.log(`Processing Order: ${orderId}, Status: ${paymentStatus}`);
-            // TODO: Update DB when mongoose issue is fixed
+
+            // Map Cashfree status to our status
+            let dbStatus = "UNKNOWN";
+            if (paymentStatus === "SUCCESS") {
+                dbStatus = "SUCCESS";
+            } else if (paymentStatus === "FAILED" || paymentStatus === "CANCELLED") {
+                dbStatus = "FAILED";
+            } else if (paymentStatus === "USER_DROPPED") {
+                dbStatus = "USER_DROPPED";
+            } else if (paymentStatus === "PENDING") {
+                dbStatus = "PENDING";
+            }
+
+            // Update payment in database
+            try {
+                await dbConnect();
+                const Payment = await getPaymentModel();
+
+                const updatedPayment = await Payment.findOneAndUpdate(
+                    { orderId: orderId },
+                    {
+                        status: dbStatus,
+                        transactionId: paymentData?.cf_payment_id || null,
+                        paymentMethod: paymentData?.payment_method?.type || null,
+                    },
+                    { new: true }
+                );
+
+                if (updatedPayment) {
+                    console.log(`Payment ${orderId} updated to status: ${dbStatus}`);
+                } else {
+                    console.log(`Payment ${orderId} not found in database`);
+                }
+            } catch (dbError) {
+                console.error("Error updating payment in database:", dbError);
+            }
 
             return NextResponse.json({ status: "OK" });
         }
