@@ -1,7 +1,5 @@
 
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/db";
-import getPaymentModel from "@/models/Payment";
 
 async function handleWebhook(req) {
     try {
@@ -27,26 +25,7 @@ async function handleWebhook(req) {
             const paymentStatus = data.data.payment ? data.data.payment.payment_status : "UNKNOWN";
 
             console.log(`Processing Order: ${orderId}, Status: ${paymentStatus}`);
-
-            try {
-                await dbConnect();
-                const Payment = await getPaymentModel();
-
-                const update = { status: paymentStatus };
-                if (data.data.payment) {
-                    update.transactionId = data.data.payment.cf_payment_id;
-                    update.paymentMethod = data.data.payment.payment_group;
-                }
-
-                await Payment.findOneAndUpdate(
-                    { orderId: orderId },
-                    update,
-                    { new: true }
-                );
-            } catch (dbError) {
-                console.error("DB Update Error:", dbError);
-                return NextResponse.json({ status: "DB Error logged" });
-            }
+            // TODO: Update DB when mongoose issue is fixed
 
             return NextResponse.json({ status: "OK" });
         }

@@ -1,20 +1,30 @@
 
 import { NextResponse } from "next/server";
 import { Cashfree } from "cashfree-pg";
-import dbConnect from "@/lib/db";
-import getPaymentModel from "@/models/Payment";
-
-Cashfree.XClientId = process.env.CLIENT_ID;
-Cashfree.XClientSecret = process.env.CLIENT_SECRET;
-Cashfree.XEnvironment = Cashfree.Environment || Cashfree.CFEnvironment || 1;
 
 export async function POST(req) {
     try {
+        // Check environment variables
+        if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET) {
+            console.error("Missing Cashfree credentials");
+            return NextResponse.json(
+                { error: "Server configuration error: Missing payment credentials" },
+                { status: 500 }
+            );
+        }
+
+        // Configure Cashfree - SDK v5+ requires instantiation
+        const isProduction = process.env.NODE_ENV === 'production';
+        const cashfree = new Cashfree(
+            isProduction ? Cashfree.PRODUCTION : Cashfree.SANDBOX,
+            process.env.CLIENT_ID,
+            process.env.CLIENT_SECRET
+        );
+
         const body = await req.json();
         const { amount, customerName, customerEmail, customerPhone } = body;
 
-        await dbConnect();
-        const Payment = await getPaymentModel();
+        console.log("Creating payment for:", { amount, customerName, customerEmail });
 
         // Generate a unique order ID
         const orderId = "ORDER_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
@@ -31,26 +41,19 @@ export async function POST(req) {
                 customer_phone: customerPhone,
             },
             order_meta: {
-                return_url: `${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/payment?order_id={order_id}`,
+                return_url: `${process.env.NEXT_PUBLIC_URL || 'https://pavankarthik.in'}/payment?order_id={order_id}`,
             },
             order_note: "Payment for Portfolio Services",
         };
 
-        const response = await Cashfree.PGCreateOrder("2023-08-01", request);
-        const paymentSessionId = response.data.payment_session_id;
+        console.log("Cashfree request:", JSON.stringify(request, null, 2));
 
-        // Save initial payment record
-        await Payment.create({
-            orderId,
-            paymentSessionId,
-            amount,
-            currency: "INR",
-            customerId,
-            customerName,
-            customerEmail,
-            customerPhone,
-            status: "PENDING",
-        });
+        // SDK v5+ - PGCreateOrder is called on the instance without version parameter
+        const response = await cashfree.PGCreateOrder(request);
+
+        console.log("Cashfree response:", JSON.stringify(response.data, null, 2));
+
+        const paymentSessionId = response.data.payment_session_id;
 
         return NextResponse.json({
             payment_session_id: paymentSessionId,
@@ -58,8 +61,9 @@ export async function POST(req) {
         });
     } catch (error) {
         console.error("Error creating order:", error);
+        console.error("Error details:", error.response?.data || error.message);
         return NextResponse.json(
-            { error: error.message || "Something went wrong" },
+            { error: error.response?.data?.message || error.message || "Something went wrong" },
             { status: 500 }
         );
     }
