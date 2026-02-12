@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { Cashfree } from "cashfree-pg";
+import { Cashfree, CFEnvironment } from "cashfree-pg";
 import dbConnect from "@/lib/db";
 import getPaymentModel from "@/models/Payment";
 
@@ -19,7 +19,7 @@ export async function GET(req) {
         const cashfreeEnv = process.env.CASHFREE_ENV || 'sandbox';
         const isProduction = cashfreeEnv === 'production';
         const cashfree = new Cashfree(
-            isProduction ? Cashfree.PRODUCTION : Cashfree.SANDBOX,
+            isProduction ? CFEnvironment.PRODUCTION : CFEnvironment.SANDBOX,
             process.env.CLIENT_ID,
             process.env.CLIENT_SECRET
         );

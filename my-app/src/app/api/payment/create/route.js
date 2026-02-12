@@ -1,6 +1,6 @@
 
 import { NextResponse } from "next/server";
-import { Cashfree } from "cashfree-pg";
+import { Cashfree, CFEnvironment } from "cashfree-pg";
 import dbConnect from "@/lib/db";
 import getPaymentModel from "@/models/Payment";
 
@@ -22,9 +22,8 @@ export async function POST(req) {
 
         console.log(`Cashfree Environment: ${cashfreeEnv}, isProduction: ${isProduction}`);
         console.log(`Client ID present: ${!!process.env.CLIENT_ID}, Secret present: ${!!process.env.CLIENT_SECRET}`);
-
         const cashfree = new Cashfree(
-            isProduction ? Cashfree.PRODUCTION : Cashfree.SANDBOX,
+            isProduction ? CFEnvironment.PRODUCTION : CFEnvironment.SANDBOX,
             process.env.CLIENT_ID,
             process.env.CLIENT_SECRET
         );
