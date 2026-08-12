@@ -3,7 +3,7 @@ export const experiences = [
     id: 1,
     title: "Full Stack Developer Intern",
     company: "Avanflix Media & Entertainment",
-    duration: "August 2025 - Present",
+    duration: "August 2025 - April 2026",
     achievements: [
       "Developed and deployed multiple client websites using Next.js and React, ensuring cross-browser compatibility and mobile responsiveness",
       "Collaborated with clients to implement custom UI/UX solutions using Tailwind CSS, improving user engagement and satisfaction"
